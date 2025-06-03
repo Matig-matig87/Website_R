@@ -514,39 +514,39 @@
 
     <!-- Waitlist CTA -->
     <section class="waitlist">
-        <div class="container">
-            <h2>Ready to Get Started?</h2>
-            <p>Join our waitlist to get early access and special launch pricing.</p>
-            
-            <div class="waitlist-form">
-                <form id="waitlist-form">
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="interest">What are you most interested in?</label>
-                        <select id="interest" name="interest" style="width: 100%; padding: 12px; border: none; border-radius: 4px; font-size: 16px;">
-                            <option value="website">Building a Website</option>
-                            <option value="ecommerce">Starting an Online Store</option>
-                            <option value="landing">Creating Landing Pages</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn" style="width: 100%; background-color: white; color: var(--primary);">Join Waitlist</button>
-                </form>
-            </div>
+    <div class="container">
+        <h2>Ready to Get Started?</h2>
+        <p>Join our waitlist to get early access and special launch pricing.</p>
+        
+        <div class="waitlist-form">
+            <!-- Modified form with Formspree action -->
+            <form id="waitlist-form" action="https://formspree.io/f/xkgbnegb" method="POST">
+                <!-- Add hidden fields for better Formspree handling -->
+                <input type="hidden" name="_subject" value="New Waitlist Submission">
+                <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> <!-- Optional thank-you page -->
+                
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="interest">What are you most interested in?</label>
+                    <select id="interest" name="interest" style="width: 100%; padding: 12px; border: none; border-radius: 4px; font-size: 16px;">
+                        <option value="website">Building a Website</option>
+                        <option value="ecommerce">Starting an Online Store</option>
+                        <option value="landing">Creating Landing Pages</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; background-color: white; color: var(--primary);">Join Waitlist</button>
+            </form>
         </div>
-    </section>
-    <form action="https://formspree.io/f/xkgbnegb" method="POST">
-          <input type="text" name="name" required>
-          <input type="email" name="email" required>
-          <button type="submit">Join Waitlist</button>
-    </form>
+    </div>
+</section>
 
     <!-- Waitlist Modal -->
     <div class="modal" id="waitlist-modal">
