@@ -637,24 +637,39 @@
         
         // Form submission
         const forms = [document.getElementById('waitlist-form'), document.getElementById('modal-waitlist-form')];
-        
-        forms.forEach(form => {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const name = form.querySelector('input[name="name"]').value;
-                const email = form.querySelector('input[name="email"]').value;
+                <form
+          action="https://formspree.io/f/xkgbnegb"
+          method="POST"
+        >
+          <label>
+            Your email:
+            <input type="email" name="email">
+          </label>
+          <label>
+            Your message:
+            <textarea name="message"></textarea>
+          </label>
+          <!-- your other form fields go here -->
+          <button type="submit">Send</button>
+        </form>
+
+        // forms.forEach(form => {
+        //     form.addEventListener('submit', (e) => {
+        //         e.preventDefault();
+        //         const name = form.querySelector('input[name="name"]').value;
+        //         const email = form.querySelector('input[name="email"]').value;
                 
-                // Here you would typically send this data to your server
-                console.log('Form submitted:', { name, email });
+                // // Here you would typically send this data to your server
+                // console.log('Form submitted:', { name, email });
                 
-                // Show success message
-                alert(`Thanks, ${name}! You've been added to our waitlist. We'll contact you at ${email} when we launch.`);
+                // // Show success message
+                // alert(`Thanks, ${name}! You've been added to our waitlist. We'll contact you at ${email} when we launch.`);
                 
-                // Reset form and close modal if applicable
-                form.reset();
-                if (form.id === 'modal-waitlist-form') {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
+                // // Reset form and close modal if applicable
+                // form.reset();
+                // if (form.id === 'modal-waitlist-form') {
+                //     modal.style.display = 'none';
+                //     document.body.style.overflow = 'auto';
                 }
             });
         });
