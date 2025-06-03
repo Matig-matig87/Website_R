@@ -637,20 +637,10 @@
         
         // Form submission
         const forms = [document.getElementById('waitlist-form'), document.getElementById('modal-waitlist-form')];
-                <form
-          action="https://formspree.io/f/xkgbnegb"
-          method="POST"
-        >
-          <label>
-            Your email:
-            <input type="email" name="email">
-          </label>
-          <label>
-            Your message:
-            <textarea name="message"></textarea>
-          </label>
-          <!-- your other form fields go here -->
-          <button type="submit">Send</button>
+        <form action="https://formspree.io/f/your-form-id" method="POST">
+          <input type="text" name="name" required>
+          <input type="email" name="email" required>
+          <button type="submit">Join Waitlist</button>
         </form>
 
         // forms.forEach(form => {
