@@ -1,673 +1,473 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Business Name - Powerful Website Builder</title>
-    <style>
-        /* Global Styles */
-        :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --accent: #4895ef;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            line-height: 1.6;
-            color: var(--dark);
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        
-        .btn:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-        
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        section {
-            padding: 80px 0;
-        }
-        
-        h1, h2, h3, h4 {
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        
-        h1 {
-            font-size: 48px;
-        }
-        
-        h2 {
-            font-size: 36px;
-            text-align: center;
-        }
-        
-        h3 {
-            font-size: 24px;
-        }
-        
-        p {
-            margin-bottom: 15px;
-            font-size: 18px;
-            color: var(--gray);
-        }
-        
-        /* Header */
-        header {
-            padding: 20px 0;
-            position: fixed;
-            width: 100%;
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 180px 0 100px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            text-align: center;
-        }
-        
-        .hero h1 {
-            max-width: 800px;
-            margin: 0 auto 20px;
-        }
-        
-        .hero p {
-            max-width: 600px;
-            margin: 0 auto 40px;
-            font-size: 20px;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        /* How We Help */
-        .how-we-help {
-            background-color: white;
-        }
-        
-        .benefits {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        
-        .benefit-card {
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-        
-        .benefit-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .benefit-card i {
-            font-size: 40px;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        /* Services */
-        .services {
-            background-color: var(--light);
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        
-        .service-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .service-img {
-            height: 200px;
-            background-color: var(--gray);
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .service-content {
-            padding: 25px;
-        }
-        
-        /* About Us */
-        .about {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-        
-        .about-img {
-            height: 400px;
-            background-color: var(--gray);
-            border-radius: 8px;
-            background-size: cover;
-            background-position: center;
-        }
-        
-        /* Waitlist Form */
-        .waitlist {
-            background-color: var(--primary);
-            color: white;
-            text-align: center;
-        }
-        
-        .waitlist h2, .waitlist p {
-            color: white;
-        }
-        
-        .waitlist-form {
-            max-width: 500px;
-            margin: 40px auto 0;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .form-group input, 
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background-color: white;
-            padding: 40px;
-            border-radius: 8px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 50px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-column h3 {
-            color: white;
-            margin-bottom: 20px;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-column a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-column a:hover {
-            color: white;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--gray);
-            font-size: 14px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 36px;
-            }
-            
-            h2 {
-                font-size: 30px;
-            }
-            
-            .hero {
-                padding: 150px 0 80px;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .about {
-                grid-template-columns: 1fr;
-            }
-            
-            .about-img {
-                height: 300px;
-            }
-        }
-    </style>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">SiteBuilder</a>
-                <ul class="nav-links">
-                    <li><a href="#how-we-help">How We Help</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#" class="btn btn-outline" id="join-waitlist">Join Waitlist</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+import React, { useState, useEffect } from 'react';
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Build Beautiful Websites Without Coding</h1>
-            <p>Our drag-and-drop platform makes it easy for anyone to create professional websites in minutes. No technical skills required.</p>
-            <div class="cta-buttons">
-                <a href="#" class="btn" id="cta-primary">Start Building Free</a>
-                <a href="#" class="btn btn-outline">Watch Demo</a>
-            </div>
-            <!-- Banner placeholder -->
-            <div style="margin-top: 50px; height: 300px; background-color: #eee; display: flex; justify-content: center; align-items: center;">
-                <p>Hero Banner/Screenshot Will Go Here</p>
-            </div>
-        </div>
-    </section>
+const App = () => {
+  // Simulating data that could come from an external source
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sortConfig, setSortConfig] = useState({ key: 'eloScore', direction: 'descending' });
+  const [filterCategory, setFilterCategory] = useState('All');
+  const [newProject, setNewProject] = useState({
+    name: '',
+    team: '',
+    category: 'OS Project',
+    complexity: 5.0,
+    effectiveness: 5.0
+  });
 
-    <!-- How We Help -->
-    <section class="how-we-help" id="how-we-help">
-        <div class="container">
-            <h2>How We Help You Succeed</h2>
-            <p class="subtitle">Our platform provides everything you need to create, launch, and grow your online presence</p>
-            
-            <div class="benefits">
-                <div class="benefit-card">
-                    <i class="fas fa-magic"></i>
-                    <h3>Easy Drag & Drop</h3>
-                    <p>Build your dream website visually with our intuitive editor. No coding required.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Mobile Responsive</h3>
-                    <p>Your site will look amazing on any device, automatically.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-bolt"></i>
-                    <h3>Lightning Fast</h3>
-                    <p>Optimized for speed with global CDN and automatic performance enhancements.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Built for Growth</h3>
-                    <p>Integrated marketing tools to help you attract and convert more visitors.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Secure Hosting</h3>
-                    <p>Enterprise-grade security with automatic backups and updates.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-headset"></i>
-                    <h3>24/7 Support</h3>
-                    <p>Our team is always ready to help you with any questions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  // Categories for filtering
+  const categories = ['All', 'OS Project', 'University', 'Corporate', 'Individual'];
 
-    <!-- Services -->
-    <section class="services" id="services">
-        <div class="container">
-            <h2>Our Services</h2>
-            <p class="subtitle">Everything you need to build your online presence</p>
-            
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-img" style="background-color: #a1c4fd;"></div>
-                    <div class="service-content">
-                        <h3>Website Builder</h3>
-                        <p>Create stunning websites with our easy-to-use drag and drop editor.</p>
-                        <a href="#" class="btn btn-outline" style="margin-top: 15px;">Learn More</a>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-img" style="background-color: #ffc3a0;"></div>
-                    <div class="service-content">
-                        <h3>Ecommerce Solutions</h3>
-                        <p>Sell products online with our powerful ecommerce tools.</p>
-                        <a href="#" class="btn btn-outline" style="margin-top: 15px;">Learn More</a>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-img" style="background-color: #84fab0;"></div>
-                    <div class="service-content">
-                        <h3>Landing Pages</h3>
-                        <p>Convert more visitors with high-converting landing pages.</p>
-                        <a href="#" class="btn btn-outline" style="margin-top: 15px;">Learn More</a>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-img" style="background-color: #ff9a9e;"></div>
-                    <div class="service-content">
-                        <h3>Hosting & Security</h3>
-                        <p>Fast, reliable hosting with enterprise-grade security.</p>
-                        <a href="#" class="btn btn-outline" style="margin-top: 15px;">Learn More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  // In a real implementation, you would fetch this data from your Excel Online or other data source
+  // This simulates loading data from an external source
+  useEffect(() => {
+    // Simulate API call to load data
+    const loadProjects = async () => {
+      setIsLoading(true);
+      
+      // This is where you would normally fetch from Excel Online, Google Sheets, or a database
+      // For demo purposes, we're using mock data, but structured to be easily replaceable
+      const mockData = [
+        {
+          id: 1,
+          name: "React",
+          team: "Meta",
+          category: "Corporate",
+          eloScore: 2850,
+          dateAdded: "2024-01-15",
+          complexity: 8.7,
+          effectiveness: 9.2
+        },
+        {
+          id: 2,
+          name: "TensorFlow",
+          team: "Google Brain",
+          category: "Corporate",
+          eloScore: 2780,
+          dateAdded: "2024-01-12",
+          complexity: 9.1,
+          effectiveness: 8.5
+        },
+        {
+          id: 3,
+          name: "Linux Kernel",
+          team: "Linux Foundation",
+          category: "OS Project",
+          eloScore: 2720,
+          dateAdded: "2024-01-10",
+          complexity: 9.5,
+          effectiveness: 7.8
+        },
+        {
+          id: 4,
+          name: "MIT CSAIL Research",
+          team: "MIT",
+          category: "University",
+          eloScore: 2680,
+          dateAdded: "2024-01-08",
+          complexity: 8.2,
+          effectiveness: 8.9
+        },
+        {
+          id: 5,
+          name: "Vue.js",
+          team: "Evan You",
+          category: "Individual",
+          eloScore: 2650,
+          dateAdded: "2024-01-05",
+          complexity: 7.8,
+          effectiveness: 9.1
+        },
+        {
+          id: 6,
+          name: "D3.js",
+          team: "Mike Bostock",
+          category: "Individual",
+          eloScore: 2620,
+          dateAdded: "2024-01-03",
+          complexity: 8.9,
+          effectiveness: 8.3
+        },
+        {
+          id: 7,
+          name: "Stanford AI Lab",
+          team: "Stanford University",
+          category: "University",
+          eloScore: 2590,
+          dateAdded: "2024-01-01",
+          complexity: 8.5,
+          effectiveness: 8.7
+        },
+        {
+          id: 8,
+          name: "Rust",
+          team: "Mozilla",
+          category: "Corporate",
+          eloScore: 2560,
+          dateAdded: "2023-12-28",
+          complexity: 9.3,
+          effectiveness: 8.1
+        }
+      ];
+      
+      // Simulate network delay
+      setTimeout(() => {
+        setProjects(mockData);
+        setIsLoading(false);
+      }, 800);
+    };
+    
+    loadProjects();
+  }, []);
 
-    <!-- About Us -->
-    <section class="about-us" id="about">
-        <div class="container">
-            <div class="about">
-                <div class="about-content">
-                    <h2>About Our Company</h2>
-                    <p>We started in 2015 with a simple mission: to make website creation accessible to everyone, regardless of technical skill.</p>
-                    <p>Today, we've helped over 50,000 businesses, entrepreneurs, and creators build their online presence with our easy-to-use platform.</p>
-                    <p>Our team of designers, developers, and marketers are passionate about creating tools that empower people to share their ideas with the world.</p>
-                    <a href="#" class="btn" style="margin-top: 20px;">Our Story</a>
-                </div>
-                <div class="about-img">
-                    <!-- Team photo placeholder -->
-                </div>
-            </div>
-        </div>
-    </section>
+  // Calculate ELO score based on complexity and effectiveness
+  const calculateEloScore = (complexity, effectiveness) => {
+    return Math.round(1500 + (complexity * 100) + (effectiveness * 100));
+  };
 
-    <!-- Waitlist CTA -->
-    <section class="waitlist">
-    <div class="container">
-        <h2>Ready to Get Started?</h2>
-        <p>Join our waitlist to get early access and special launch pricing.</p>
-        
-        <div class="waitlist-form">
-            <!-- Modified form with Formspree action -->
-            <form id="waitlist-form" action="https://formspree.io/f/xkgbnegb" method="POST">
-                <!-- Add hidden fields for better Formspree handling -->
-                <input type="hidden" name="_subject" value="New Waitlist Submission">
-                <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> <!-- Optional thank-you page -->
-                
-                <div class="form-group">
-                    <label for="name">Your Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="interest">What are you most interested in?</label>
-                    <select id="interest" name="interest" style="width: 100%; padding: 12px; border: none; border-radius: 4px; font-size: 16px;">
-                        <option value="website">Building a Website</option>
-                        <option value="ecommerce">Starting an Online Store</option>
-                        <option value="landing">Creating Landing Pages</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn" style="width: 100%; background-color: white; color: var(--primary);">Join Waitlist</button>
-            </form>
+  // Sort projects
+  const sortedProjects = [...projects].sort((a, b) => {
+    if (a[sortConfig.key] < b[sortConfig.key]) {
+      return sortConfig.direction === 'ascending' ? -1 : 1;
+    }
+    if (a[sortConfig.key] > b[sortConfig.key]) {
+      return sortConfig.direction === 'ascending' ? 1 : -1;
+    }
+    return 0;
+  }).filter(project => filterCategory === 'All' || project.category === filterCategory);
+
+  // Handle sorting
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  // Handle adding new project
+  const handleAddProject = (e) => {
+    e.preventDefault();
+    if (!newProject.name || !newProject.team) return;
+    
+    const eloScore = calculateEloScore(newProject.complexity, newProject.effectiveness);
+    const project = {
+      id: projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1,
+      ...newProject,
+      eloScore,
+      dateAdded: new Date().toISOString().split('T')[0]
+    };
+    
+    setProjects([...projects, project]);
+    setNewProject({
+      name: '',
+      team: '',
+      category: 'OS Project',
+      complexity: 5.0,
+      effectiveness: 5.0
+    });
+  };
+
+  // In a real implementation, you would save to your external data source here
+  const handleSaveToExternalSource = async () => {
+    // This is where you would implement the connection to Excel Online
+    // For example, using Microsoft Graph API or Excel REST API
+    alert("In a real implementation, this would save data to your Excel Online spreadsheet");
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500 mx-auto mb-4"></div>
+          <p className="text-white text-xl">Loading projects data...</p>
+          <p className="text-gray-400 mt-2">In a real implementation, this would connect to your Excel Online spreadsheet</p>
         </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      {/* Header */}
+      <header className="bg-black bg-opacity-30 backdrop-blur-sm border-b border-purple-500/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+            Finding the best builders.
+          </h1>
+          <p className="text-xl text-purple-200 mb-6">
+            ...and battling against a waste of code
+          </p>
+          <p className="text-lg text-gray-300 max-w-4xl">
+            We create battles of code from across the web against each other to evaluate the best. 
+            Using reinforcement learning AI models to score the code across the web. 
+            We do it inside companies full-time. And here some part-time initiative for 
+            Open Source projects, Universities, Corporate open repos... and suggest your favorite ones below.
+          </p>
+          <p className="text-md text-gray-400 mt-4">
+            It's simple - we adjust complexity and effectiveness of the code.
+          </p>
+        </div>
+      </header>
+
+      {/* Dashboard Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 mb-8 border border-purple-500/20">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+            <h2 className="text-3xl font-bold text-white mb-4 md:mb-0">Code Elo Ranking Dashboard</h2>
+            <div className="flex space-x-4">
+              <select 
+                value={filterCategory} 
+                onChange={(e) => setFilterCategory(e.target.value)}
+                className="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              >
+                {categories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+              <button
+                onClick={handleSaveToExternalSource}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
+              >
+                Save to External Source
+              </button>
+            </div>
+          </div>
+          
+          {projects.length === 0 ? (
+            <div className="text-center py-12 text-gray-400">
+              <p>No projects found. Add your first project below.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-white">
+                <thead>
+                  <tr className="border-b border-purple-500/30">
+                    <th 
+                      className="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
+                      onClick={() => requestSort('name')}
+                    >
+                      Project {sortConfig.key === 'name' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                    </th>
+                    <th 
+                      className="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
+                      onClick={() => requestSort('team')}
+                    >
+                      Team {sortConfig.key === 'team' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                    </th>
+                    <th 
+                      className="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
+                      onClick={() => requestSort('category')}
+                    >
+                      Category {sortConfig.key === 'category' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                    </th>
+                    <th 
+                      className="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
+                      onClick={() => requestSort('eloScore')}
+                    >
+                      Elo Score {sortConfig.key === 'eloScore' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                    </th>
+                    <th 
+                      className="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
+                      onClick={() => requestSort('complexity')}
+                    >
+                      Complexity {sortConfig.key === 'complexity' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                    </th>
+                    <th 
+                      className="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
+                      onClick={() => requestSort('effectiveness')}
+                    >
+                      Effectiveness {sortConfig.key === 'effectiveness' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                    </th>
+                    <th 
+                      className="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
+                      onClick={() => requestSort('dateAdded')}
+                    >
+                      Added {sortConfig.key === 'dateAdded' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sortedProjects.map((project, index) => (
+                    <tr 
+                      key={project.id} 
+                      className={`border-b border-purple-500/10 hover:bg-white hover:bg-opacity-5 transition-colors ${
+                        index < 3 ? 'bg-yellow-500 bg-opacity-20' : ''
+                      }`}
+                    >
+                      <td className="py-4 px-4 font-medium">{project.name}</td>
+                      <td className="py-4 px-4">{project.team}</td>
+                      <td className="py-4 px-4">
+                        <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                          project.category === 'Corporate' ? 'bg-blue-500 bg-opacity-30 text-blue-200' :
+                          project.category === 'University' ? 'bg-green-500 bg-opacity-30 text-green-200' :
+                          project.category === 'OS Project' ? 'bg-purple-500 bg-opacity-30 text-purple-200' :
+                          'bg-orange-500 bg-opacity-30 text-orange-200'
+                        }`}>
+                          {project.category}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 text-right font-bold">{project.eloScore}</td>
+                      <td className="py-4 px-4 text-right">{project.complexity.toFixed(1)}</td>
+                      <td className="py-4 px-4 text-right">{project.effectiveness.toFixed(1)}</td>
+                      <td className="py-4 px-4 text-right">{project.dateAdded}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+
+        {/* Add Project Form */}
+        <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 border border-purple-500/20">
+          <h3 className="text-2xl font-bold text-white mb-4">Suggest a Project</h3>
+          <form onSubmit={handleAddProject} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <input
+              type="text"
+              placeholder="Project Name"
+              value={newProject.name}
+              onChange={(e) => setNewProject({...newProject, name: e.target.value})}
+              className="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Team/Organization"
+              value={newProject.team}
+              onChange={(e) => setNewProject({...newProject, team: e.target.value})}
+              className="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              required
+            />
+            <select
+              value={newProject.category}
+              onChange={(e) => setNewProject({...newProject, category: e.target.value})}
+              className="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            >
+              {categories.slice(1).map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+            <input
+              type="range"
+              min="1"
+              max="10"
+              step="0.1"
+              value={newProject.complexity}
+              onChange={(e) => setNewProject({...newProject, complexity: parseFloat(e.target.value)})}
+              className="col-span-1 md:col-span-2 lg:col-span-1"
+            />
+            <span className="text-white">Complexity: {newProject.complexity.toFixed(1)}</span>
+            <input
+              type="range"
+              min="1"
+              max="10"
+              step="0.1"
+              value={newProject.effectiveness}
+              onChange={(e) => setNewProject({...newProject, effectiveness: parseFloat(e.target.value)})}
+              className="col-span-1 md:col-span-2 lg:col-span-1"
+            />
+            <span className="text-white">Effectiveness: {newProject.effectiveness.toFixed(1)}</span>
+            <button
+              type="submit"
+              className="col-span-1 md:col-span-2 lg:col-span-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+            >
+              Add Project (Estimated Elo: {calculateEloScore(newProject.complexity, newProject.effectiveness)})
+            </button>
+          </form>
+        </div>
+      </section>
+
+      {/* Business Value Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white text-center">
+          <h2 className="text-3xl font-bold mb-4">Company looking to manage development teams?</h2>
+          <p className="text-xl mb-6">Tried LORA and many other KPIs frameworks?</p>
+          <p className="text-lg mb-8">
+            Identify the best in your team - we track both complexity and volume of the code, 
+            making it apples-to-apples. Privately compare and ranking across scored databases, 
+            and finding the areas to improve.
+          </p>
+          <button className="bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
+            Request Enterprise Demo
+          </button>
+        </div>
+      </section>
+
+      {/* Einstein Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="md:w-1/2">
+            <img 
+              src="https://placehold.co/600x400/4f46e5/ffffff?text=Einstein+Writing+E=mc%C2%B2" 
+              alt="Cartoon Einstein writing E=mc² on board" 
+              className="rounded-xl shadow-2xl"
+            />
+          </div>
+          <div className="md:w-1/2 text-white">
+            <h2 className="text-3xl font-bold mb-6">The Art of Minimal Code</h2>
+            <p className="text-lg leading-relaxed">
+              Many programmers are describing their daily job as such they've been inventing something, 
+              problem-solving for days and finally writing a few lines of code.
+            </p>
+            <p className="text-lg mt-4 leading-relaxed">
+              Our AI engine tries to highlight those "edge cases" - the elegant solutions that solve 
+              complex problems with minimal, beautiful code.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Electrician Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="md:w-1/2 text-white order-2 md:order-1">
+            <h2 className="text-3xl font-bold mb-6">The Reality of Most Code</h2>
+            <p className="text-lg leading-relaxed mb-6">
+              ...but the data shows that most deliverables look more like complex electrician output:
+            </p>
+            <ul className="space-y-3 text-lg">
+              <li className="flex items-start">
+                <span className="text-purple-400 mr-2">•</span>
+                <span>90% of code is copied (which creates vulnerabilities)</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-400 mr-2">•</span>
+                <span>75% of enterprise codebases contain deprecated libraries</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-400 mr-2">•</span>
+                <span>60% of development time is spent on maintenance rather than innovation</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-400 mr-2">•</span>
+                <span>Only 15% of code changes actually improve system performance</span>
+              </li>
+            </ul>
+          </div>
+          <div className="md:w-1/2 order-1 md:order-2">
+            <img 
+              src="https://placehold.co/600x400/dc2626/ffffff?text=Electrician+with+Wires" 
+              alt="Electrician figuring out lots of wires" 
+              className="rounded-xl shadow-2xl"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-black bg-opacity-30 backdrop-blur-sm border-t border-purple-500/20 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center text-gray-400">
+            <p>© 2024 Code Elo Ranking. All rights reserved.</p>
+            <p className="mt-2">Powered by Reinforcement Learning AI Models</p>
+            <p className="mt-4 text-sm">
+              Note: In production, this dashboard would connect to Excel Online or your preferred data source
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
-</section>
+  );
+};
 
-    <!-- Waitlist Modal -->
-    <div class="modal" id="waitlist-modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Join Our Waitlist</h2>
-            <p>Be the first to know when we launch and get exclusive early access offers.</p>
-            <form id="modal-waitlist-form" style="margin-top: 30px;">
-                <div class="form-group">
-                    <label for="modal-name">Your Name</label>
-                    <input type="text" id="modal-name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="modal-email">Email Address</label>
-                    <input type="email" id="modal-email" name="email" required>
-                </div>
-                <button type="submit" class="btn" style="width: 100%;">Join Waitlist</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>SiteBuilder</h3>
-                    <p>The easiest way to build beautiful, professional websites without coding.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Templates</a></li>
-                        <li><a href="#">Integrations</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Webinars</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Press</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2023 SiteBuilder. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Waitlist Modal
-        const modal = document.getElementById('waitlist-modal');
-        const joinWaitlistBtn = document.getElementById('join-waitlist');
-        const closeModal = document.querySelector('.close-modal');
-        const ctaPrimary = document.getElementById('cta-primary');
-        
-        // Open modal when "Join Waitlist" is clicked
-        [joinWaitlistBtn, ctaPrimary].forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            });
-        });
-        
-        // Close modal when X is clicked
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-        
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-        
-        // Form submission
-        // const forms = [document.getElementById('waitlist-form'), document.getElementById('modal-waitlist-form')];
-        // <form action="https://formspree.io/f/xkgbnegb" method="POST">
-        //   <input type="text" name="name" required>
-        //   <input type="email" name="email" required>
-        //   <button type="submit">Join Waitlist</button>
-        // </form>
-
-        // forms.forEach(form => {
-        //     form.addEventListener('submit', (e) => {
-        //         e.preventDefault();
-        //         const name = form.querySelector('input[name="name"]').value;
-        //         const email = form.querySelector('input[name="email"]').value;
-                
-                // // Here you would typically send this data to your server
-                // console.log('Form submitted:', { name, email });
-                
-                // // Show success message
-                // alert(`Thanks, ${name}! You've been added to our waitlist. We'll contact you at ${email} when we launch.`);
-                
-                // // Reset form and close modal if applicable
-                // form.reset();
-                // if (form.id === 'modal-waitlist-form') {
-                //     modal.style.display = 'none';
-                //     document.body.style.overflow = 'auto';
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+export default App;
