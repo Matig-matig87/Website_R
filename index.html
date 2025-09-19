@@ -1,473 +1,626 @@
-import React, { useState, useEffect } from 'react';
-
-const App = () => {
-  // Simulating data that could come from an external source
-  const [projects, setProjects] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [sortConfig, setSortConfig] = useState({ key: 'eloScore', direction: 'descending' });
-  const [filterCategory, setFilterCategory] = useState('All');
-  const [newProject, setNewProject] = useState({
-    name: '',
-    team: '',
-    category: 'OS Project',
-    complexity: 5.0,
-    effectiveness: 5.0
-  });
-
-  // Categories for filtering
-  const categories = ['All', 'OS Project', 'University', 'Corporate', 'Individual'];
-
-  // In a real implementation, you would fetch this data from your Excel Online or other data source
-  // This simulates loading data from an external source
-  useEffect(() => {
-    // Simulate API call to load data
-    const loadProjects = async () => {
-      setIsLoading(true);
-      
-      // This is where you would normally fetch from Excel Online, Google Sheets, or a database
-      // For demo purposes, we're using mock data, but structured to be easily replaceable
-      const mockData = [
-        {
-          id: 1,
-          name: "React",
-          team: "Meta",
-          category: "Corporate",
-          eloScore: 2850,
-          dateAdded: "2024-01-15",
-          complexity: 8.7,
-          effectiveness: 9.2
-        },
-        {
-          id: 2,
-          name: "TensorFlow",
-          team: "Google Brain",
-          category: "Corporate",
-          eloScore: 2780,
-          dateAdded: "2024-01-12",
-          complexity: 9.1,
-          effectiveness: 8.5
-        },
-        {
-          id: 3,
-          name: "Linux Kernel",
-          team: "Linux Foundation",
-          category: "OS Project",
-          eloScore: 2720,
-          dateAdded: "2024-01-10",
-          complexity: 9.5,
-          effectiveness: 7.8
-        },
-        {
-          id: 4,
-          name: "MIT CSAIL Research",
-          team: "MIT",
-          category: "University",
-          eloScore: 2680,
-          dateAdded: "2024-01-08",
-          complexity: 8.2,
-          effectiveness: 8.9
-        },
-        {
-          id: 5,
-          name: "Vue.js",
-          team: "Evan You",
-          category: "Individual",
-          eloScore: 2650,
-          dateAdded: "2024-01-05",
-          complexity: 7.8,
-          effectiveness: 9.1
-        },
-        {
-          id: 6,
-          name: "D3.js",
-          team: "Mike Bostock",
-          category: "Individual",
-          eloScore: 2620,
-          dateAdded: "2024-01-03",
-          complexity: 8.9,
-          effectiveness: 8.3
-        },
-        {
-          id: 7,
-          name: "Stanford AI Lab",
-          team: "Stanford University",
-          category: "University",
-          eloScore: 2590,
-          dateAdded: "2024-01-01",
-          complexity: 8.5,
-          effectiveness: 8.7
-        },
-        {
-          id: 8,
-          name: "Rust",
-          team: "Mozilla",
-          category: "Corporate",
-          eloScore: 2560,
-          dateAdded: "2023-12-28",
-          complexity: 9.3,
-          effectiveness: 8.1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Elo Ranking</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            900: '#0f172a',
+                        },
+                        purple: {
+                            900: '#581c87',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7e22ce',
+                        }
+                    }
+                }
+            }
         }
-      ];
-      
-      // Simulate network delay
-      setTimeout(() => {
-        setProjects(mockData);
-        setIsLoading(false);
-      }, 800);
-    };
-    
-    loadProjects();
-  }, []);
-
-  // Calculate ELO score based on complexity and effectiveness
-  const calculateEloScore = (complexity, effectiveness) => {
-    return Math.round(1500 + (complexity * 100) + (effectiveness * 100));
-  };
-
-  // Sort projects
-  const sortedProjects = [...projects].sort((a, b) => {
-    if (a[sortConfig.key] < b[sortConfig.key]) {
-      return sortConfig.direction === 'ascending' ? -1 : 1;
-    }
-    if (a[sortConfig.key] > b[sortConfig.key]) {
-      return sortConfig.direction === 'ascending' ? 1 : -1;
-    }
-    return 0;
-  }).filter(project => filterCategory === 'All' || project.category === filterCategory);
-
-  // Handle sorting
-  const requestSort = (key) => {
-    let direction = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
-    }
-    setSortConfig({ key, direction });
-  };
-
-  // Handle adding new project
-  const handleAddProject = (e) => {
-    e.preventDefault();
-    if (!newProject.name || !newProject.team) return;
-    
-    const eloScore = calculateEloScore(newProject.complexity, newProject.effectiveness);
-    const project = {
-      id: projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1,
-      ...newProject,
-      eloScore,
-      dateAdded: new Date().toISOString().split('T')[0]
-    };
-    
-    setProjects([...projects, project]);
-    setNewProject({
-      name: '',
-      team: '',
-      category: 'OS Project',
-      complexity: 5.0,
-      effectiveness: 5.0
-    });
-  };
-
-  // In a real implementation, you would save to your external data source here
-  // const handleSaveToExternalSource = async () => {
-    // This is where you would implement the connection to Excel Online
-    // For example, using Microsoft Graph API or Excel REST API
-    // alert("In a real implementation, this would save data to your Excel Online spreadsheet");
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500 mx-auto mb-4"></div>
-          <p className="text-white text-xl">Loading projects data...</p>
-          <p className="text-gray-400 mt-2">In a real implementation, this would connect to your Excel Online spreadsheet</p>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Header */}
-      <header className="bg-black bg-opacity-30 backdrop-blur-sm border-b border-purple-500/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-            Finding the best builders.
-          </h1>
-          <p className="text-xl text-purple-200 mb-6">
-            ...and battling against a waste of code
-          </p>
-          <p className="text-lg text-gray-300 max-w-4xl">
-            We create battles of code from across the web against each other to evaluate the best. 
-            Using reinforcement learning AI models to score the code across the web. 
-            We do it inside companies full-time. And here some part-time initiative for 
-            Open Source projects, Universities, Corporate open repos... and suggest your favorite ones below.
-          </p>
-          <p className="text-md text-gray-400 mt-4">
-            It's simple - we adjust complexity and effectiveness of the code.
-          </p>
-        </div>
-      </header>
-
-      {/* Dashboard Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 mb-8 border border-purple-500/20">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-            <h2 className="text-3xl font-bold text-white mb-4 md:mb-0">Code Elo Ranking Dashboard</h2>
-            <div className="flex space-x-4">
-              <select 
-                value={filterCategory} 
-                onChange={(e) => setFilterCategory(e.target.value)}
-                className="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-              <button
-                onClick={handleSaveToExternalSource}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
-              >
-                Save to External Source
-              </button>
+    </script>
+    <style>
+        body {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+            min-height: 100vh;
+        }
+        
+        .loading-spinner {
+            border-top-color: #a855f7;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .bg-opacity-10 {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .bg-opacity-20 {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .bg-opacity-30 {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+        }
+        
+        .backdrop-blur-md {
+            backdrop-filter: blur(8px);
+        }
+        
+        .border-purple-500\/20 {
+            border-color: rgba(168, 85, 247, 0.2);
+        }
+        
+        .border-purple-500\/30 {
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+        
+        .border-purple-500\/10 {
+            border-color: rgba(168, 85, 247, 0.1);
+        }
+        
+        /* Custom scrollbar for table */
+        .overflow-x-auto::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .overflow-x-auto::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        .overflow-x-auto::-webkit-scrollbar-thumb {
+            background: rgba(168, 85, 247, 0.5);
+            border-radius: 4px;
+        }
+        
+        .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+            background: rgba(168, 85, 247, 0.7);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <div id="app">
+        <!-- Header -->
+        <header class="bg-black bg-opacity-30 backdrop-blur-sm border-b border-purple-500/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">
+                    Finding the best builders.
+                </h1>
+                <p class="text-xl text-purple-200 mb-6">
+                    ...and battling against a waste of code
+                </p>
+                <p class="text-lg text-gray-300 max-w-4xl">
+                    We create battles of code from across the web against each other to evaluate the best. 
+                    Using reinforcement learning AI models to score the code across the web. 
+                    We do it inside companies full-time. And here some part-time initiative for 
+                    Open Source projects, Universities, Corporate open repos... and suggest your favorite ones below.
+                </p>
+                <p class="text-md text-gray-400 mt-4">
+                    It's simple - we adjust complexity and effectiveness of the code.
+                </p>
             </div>
-          </div>
-          
-          {projects.length === 0 ? (
-            <div className="text-center py-12 text-gray-400">
-              <p>No projects found. Add your first project below.</p>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 mb-8 border border-purple-500/20">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <h2 class="text-3xl font-bold text-white mb-4 md:mb-0">Code Elo Ranking Dashboard</h2>
+                    <div class="flex space-x-4">
+                        <select id="categoryFilter" class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="All">All</option>
+                            <option value="OS Project">OS Project</option>
+                            <option value="University">University</option>
+                            <option value="Corporate">Corporate</option>
+                            <option value="Individual">Individual</option>
+                        </select>
+                        <button id="saveButton" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
+                            Save to External Source
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-white">
+                        <thead>
+                            <tr class="border-b border-purple-500/30">
+                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="name">
+                                    Project ↑
+                                </th>
+                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="team">
+                                    Team ↑
+                                </th>
+                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="category">
+                                    Category ↑
+                                </th>
+                                <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="eloScore">
+                                    Elo Score ↑
+                                </th>
+                                <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="complexity">
+                                    Complexity ↑
+                                </th>
+                                <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="effectiveness">
+                                    Effectiveness ↑
+                                </th>
+                                <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="dateAdded">
+                                    Added ↑
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsTable">
+                            <!-- Projects will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-white">
-                <thead>
-                  <tr className="border-b border-purple-500/30">
-                    <th 
-                      className="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
-                      onClick={() => requestSort('name')}
+
+            <!-- Add Project Form -->
+            <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 border border-purple-500/20">
+                <h3 class="text-2xl font-bold text-white mb-4">Suggest a Project</h3>
+                <form id="addProjectForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <input
+                        type="text"
+                        id="projectName"
+                        placeholder="Project Name"
+                        class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        required
+                    />
+                    <input
+                        type="text"
+                        id="projectTeam"
+                        placeholder="Team/Organization"
+                        class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        required
+                    />
+                    <select
+                        id="projectCategory"
+                        class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     >
-                      Project {sortConfig.key === 'name' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-                    </th>
-                    <th 
-                      className="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
-                      onClick={() => requestSort('team')}
+                        <option value="OS Project">OS Project</option>
+                        <option value="University">University</option>
+                        <option value="Corporate">Corporate</option>
+                        <option value="Individual">Individual</option>
+                    </select>
+                    <div class="col-span-1 md:col-span-2 lg:col-span-1 flex items-center gap-4">
+                        <input
+                            type="range"
+                            id="projectComplexity"
+                            min="1"
+                            max="10"
+                            step="0.1"
+                            value="5.0"
+                            class="flex-1"
+                        />
+                        <span id="complexityValue" class="text-white w-20">5.0</span>
+                    </div>
+                    <span class="text-white col-span-1 md:col-span-2 lg:col-span-1">Complexity: <span id="complexityDisplay">5.0</span></span>
+                    <div class="col-span-1 md:col-span-2 lg:col-span-1 flex items-center gap-4">
+                        <input
+                            type="range"
+                            id="projectEffectiveness"
+                            min="1"
+                            max="10"
+                            step="0.1"
+                            value="5.0"
+                            class="flex-1"
+                        />
+                        <span id="effectivenessValue" class="text-white w-20">5.0</span>
+                    </div>
+                    <span class="text-white col-span-1 md:col-span-2 lg:col-span-1">Effectiveness: <span id="effectivenessDisplay">5.0</span></span>
+                    <button
+                        type="submit"
+                        class="col-span-1 md:col-span-2 lg:col-span-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
                     >
-                      Team {sortConfig.key === 'team' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-                    </th>
-                    <th 
-                      className="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
-                      onClick={() => requestSort('category')}
-                    >
-                      Category {sortConfig.key === 'category' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-                    </th>
-                    <th 
-                      className="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
-                      onClick={() => requestSort('eloScore')}
-                    >
-                      Elo Score {sortConfig.key === 'eloScore' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-                    </th>
-                    <th 
-                      className="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
-                      onClick={() => requestSort('complexity')}
-                    >
-                      Complexity {sortConfig.key === 'complexity' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-                    </th>
-                    <th 
-                      className="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
-                      onClick={() => requestSort('effectiveness')}
-                    >
-                      Effectiveness {sortConfig.key === 'effectiveness' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-                    </th>
-                    <th 
-                      className="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors"
-                      onClick={() => requestSort('dateAdded')}
-                    >
-                      Added {sortConfig.key === 'dateAdded' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sortedProjects.map((project, index) => (
-                    <tr 
-                      key={project.id} 
-                      className={`border-b border-purple-500/10 hover:bg-white hover:bg-opacity-5 transition-colors ${
-                        index < 3 ? 'bg-yellow-500 bg-opacity-20' : ''
-                      }`}
-                    >
-                      <td className="py-4 px-4 font-medium">{project.name}</td>
-                      <td className="py-4 px-4">{project.team}</td>
-                      <td className="py-4 px-4">
-                        <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                          project.category === 'Corporate' ? 'bg-blue-500 bg-opacity-30 text-blue-200' :
-                          project.category === 'University' ? 'bg-green-500 bg-opacity-30 text-green-200' :
-                          project.category === 'OS Project' ? 'bg-purple-500 bg-opacity-30 text-purple-200' :
-                          'bg-orange-500 bg-opacity-30 text-orange-200'
-                        }`}>
-                          {project.category}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4 text-right font-bold">{project.eloScore}</td>
-                      <td className="py-4 px-4 text-right">{project.complexity.toFixed(1)}</td>
-                      <td className="py-4 px-4 text-right">{project.effectiveness.toFixed(1)}</td>
-                      <td className="py-4 px-4 text-right">{project.dateAdded}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                        Add Project (Estimated Elo: <span id="estimatedElo">1500</span>)
+                    </button>
+                </form>
             </div>
-          )}
-        </div>
+        </section>
 
-        {/* Add Project Form */}
-        <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 border border-purple-500/20">
-          <h3 className="text-2xl font-bold text-white mb-4">Suggest a Project</h3>
-          <form onSubmit={handleAddProject} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <input
-              type="text"
-              placeholder="Project Name"
-              value={newProject.name}
-              onChange={(e) => setNewProject({...newProject, name: e.target.value})}
-              className="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              required
-            />
-            <input
-              type="text"
-              placeholder="Team/Organization"
-              value={newProject.team}
-              onChange={(e) => setNewProject({...newProject, team: e.target.value})}
-              className="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              required
-            />
-            <select
-              value={newProject.category}
-              onChange={(e) => setNewProject({...newProject, category: e.target.value})}
-              className="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            >
-              {categories.slice(1).map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
-            <input
-              type="range"
-              min="1"
-              max="10"
-              step="0.1"
-              value={newProject.complexity}
-              onChange={(e) => setNewProject({...newProject, complexity: parseFloat(e.target.value)})}
-              className="col-span-1 md:col-span-2 lg:col-span-1"
-            />
-            <span className="text-white">Complexity: {newProject.complexity.toFixed(1)}</span>
-            <input
-              type="range"
-              min="1"
-              max="10"
-              step="0.1"
-              value={newProject.effectiveness}
-              onChange={(e) => setNewProject({...newProject, effectiveness: parseFloat(e.target.value)})}
-              className="col-span-1 md:col-span-2 lg:col-span-1"
-            />
-            <span className="text-white">Effectiveness: {newProject.effectiveness.toFixed(1)}</span>
-            <button
-              type="submit"
-              className="col-span-1 md:col-span-2 lg:col-span-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
-            >
-              Add Project (Estimated Elo: {calculateEloScore(newProject.complexity, newProject.effectiveness)})
-            </button>
-          </form>
-        </div>
-      </section>
+        <!-- Business Value Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white text-center">
+                <h2 class="text-3xl font-bold mb-4">Company looking to manage development teams?</h2>
+                <p class="text-xl mb-6">Tried LORA and many other KPIs frameworks?</p>
+                <p class="text-lg mb-8">
+                    Identify the best in your team - we track both complexity and volume of the code, 
+                    making it apples-to-apples. Privately compare and ranking across scored databases, 
+                    and finding the areas to improve.
+                </p>
+                <button class="bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
+                    Request Enterprise Demo
+                </button>
+            </div>
+        </section>
 
-      {/* Business Value Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white text-center">
-          <h2 className="text-3xl font-bold mb-4">Company looking to manage development teams?</h2>
-          <p className="text-xl mb-6">Tried LORA and many other KPIs frameworks?</p>
-          <p className="text-lg mb-8">
-            Identify the best in your team - we track both complexity and volume of the code, 
-            making it apples-to-apples. Privately compare and ranking across scored databases, 
-            and finding the areas to improve.
-          </p>
-          <button className="bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
-            Request Enterprise Demo
-          </button>
-        </div>
-      </section>
+        <!-- Einstein Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <img 
+                        src="https://placehold.co/600x400/4f46e5/ffffff?text=Einstein+Writing+E=mc%C2%B2" 
+                        alt="Cartoon Einstein writing E=mc² on board" 
+                        class="rounded-xl shadow-2xl w-full"
+                    />
+                </div>
+                <div class="md:w-1/2 text-white">
+                    <h2 class="text-3xl font-bold mb-6">The Art of Minimal Code</h2>
+                    <p class="text-lg leading-relaxed">
+                        Many programmers are describing their daily job as such they've been inventing something, 
+                        problem-solving for days and finally writing a few lines of code.
+                    </p>
+                    <p class="text-lg mt-4 leading-relaxed">
+                        Our AI engine tries to highlight those "edge cases" - the elegant solutions that solve 
+                        complex problems with minimal, beautiful code.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-      {/* Einstein Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="md:w-1/2">
-            <img 
-              src="https://placehold.co/600x400/4f46e5/ffffff?text=Einstein+Writing+E=mc%C2%B2" 
-              alt="Cartoon Einstein writing E=mc² on board" 
-              className="rounded-xl shadow-2xl"
-            />
-          </div>
-          <div className="md:w-1/2 text-white">
-            <h2 className="text-3xl font-bold mb-6">The Art of Minimal Code</h2>
-            <p className="text-lg leading-relaxed">
-              Many programmers are describing their daily job as such they've been inventing something, 
-              problem-solving for days and finally writing a few lines of code.
-            </p>
-            <p className="text-lg mt-4 leading-relaxed">
-              Our AI engine tries to highlight those "edge cases" - the elegant solutions that solve 
-              complex problems with minimal, beautiful code.
-            </p>
-          </div>
-        </div>
-      </section>
+        <!-- Electrician Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 text-white order-2 md:order-1">
+                    <h2 class="text-3xl font-bold mb-6">The Reality of Most Code</h2>
+                    <p class="text-lg leading-relaxed mb-6">
+                        ...but the data shows that most deliverables look more like complex electrician output:
+                    </p>
+                    <ul class="space-y-3 text-lg">
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">•</span>
+                            <span>90% of code is copied (which creates vulnerabilities)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">•</span>
+                            <span>75% of enterprise codebases contain deprecated libraries</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">•</span>
+                            <span>60% of development time is spent on maintenance rather than innovation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">•</span>
+                            <span>Only 15% of code changes actually improve system performance</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2 order-1 md:order-2">
+                    <img 
+                        src="https://placehold.co/600x400/dc2626/ffffff?text=Electrician+with+Wires" 
+                        alt="Electrician figuring out lots of wires" 
+                        class="rounded-xl shadow-2xl w-full"
+                    />
+                </div>
+            </div>
+        </section>
 
-      {/* Electrician Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="md:w-1/2 text-white order-2 md:order-1">
-            <h2 className="text-3xl font-bold mb-6">The Reality of Most Code</h2>
-            <p className="text-lg leading-relaxed mb-6">
-              ...but the data shows that most deliverables look more like complex electrician output:
-            </p>
-            <ul className="space-y-3 text-lg">
-              <li className="flex items-start">
-                <span className="text-purple-400 mr-2">•</span>
-                <span>90% of code is copied (which creates vulnerabilities)</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-400 mr-2">•</span>
-                <span>75% of enterprise codebases contain deprecated libraries</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-400 mr-2">•</span>
-                <span>60% of development time is spent on maintenance rather than innovation</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-400 mr-2">•</span>
-                <span>Only 15% of code changes actually improve system performance</span>
-              </li>
-            </ul>
-          </div>
-          <div className="md:w-1/2 order-1 md:order-2">
-            <img 
-              src="https://placehold.co/600x400/dc2626/ffffff?text=Electrician+with+Wires" 
-              alt="Electrician figuring out lots of wires" 
-              className="rounded-xl shadow-2xl"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-black bg-opacity-30 backdrop-blur-sm border-t border-purple-500/20 mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center text-gray-400">
-            <p>© 2024 Code Elo Ranking. All rights reserved.</p>
-            <p className="mt-2">Powered by Reinforcement Learning AI Models</p>
-            <p className="mt-4 text-sm">
-              Note: In production, this dashboard would connect to Excel Online or your preferred data source
-            </p>
-          </div>
-        </div>
-      </footer>
+        <!-- Footer -->
+        <footer class="bg-black bg-opacity-30 backdrop-blur-sm border-t border-purple-500/20 mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="text-center text-gray-400">
+                    <p>© 2024 Code Elo Ranking. All rights reserved.</p>
+                    <p class="mt-2">Powered by Reinforcement Learning AI Models</p>
+                    <p class="mt-4 text-sm">
+                        Note: In production, this dashboard would connect to Excel Online or your preferred data source
+                    </p>
+                </div>
+            </div>
+        </footer>
     </div>
-  );
-};
 
-export default App;
+    <script>
+        // Mock data
+        const mockData = [
+            {
+                id: 1,
+                name: "React",
+                team: "Meta",
+                category: "Corporate",
+                eloScore: 2850,
+                dateAdded: "2024-01-15",
+                complexity: 8.7,
+                effectiveness: 9.2
+            },
+            {
+                id: 2,
+                name: "TensorFlow",
+                team: "Google Brain",
+                category: "Corporate",
+                eloScore: 2780,
+                dateAdded: "2024-01-12",
+                complexity: 9.1,
+                effectiveness: 8.5
+            },
+            {
+                id: 3,
+                name: "Linux Kernel",
+                team: "Linux Foundation",
+                category: "OS Project",
+                eloScore: 2720,
+                dateAdded: "2024-01-10",
+                complexity: 9.5,
+                effectiveness: 7.8
+            },
+            {
+                id: 4,
+                name: "MIT CSAIL Research",
+                team: "MIT",
+                category: "University",
+                eloScore: 2680,
+                dateAdded: "2024-01-08",
+                complexity: 8.2,
+                effectiveness: 8.9
+            },
+            {
+                id: 5,
+                name: "Vue.js",
+                team: "Evan You",
+                category: "Individual",
+                eloScore: 2650,
+                dateAdded: "2024-01-05",
+                complexity: 7.8,
+                effectiveness: 9.1
+            },
+            {
+                id: 6,
+                name: "D3.js",
+                team: "Mike Bostock",
+                category: "Individual",
+                eloScore: 2620,
+                dateAdded: "2024-01-03",
+                complexity: 8.9,
+                effectiveness: 8.3
+            },
+            {
+                id: 7,
+                name: "Stanford AI Lab",
+                team: "Stanford University",
+                category: "University",
+                eloScore: 2590,
+                dateAdded: "2024-01-01",
+                complexity: 8.5,
+                effectiveness: 8.7
+            },
+            {
+                id: 8,
+                name: "Rust",
+                team: "Mozilla",
+                category: "Corporate",
+                eloScore: 2560,
+                dateAdded: "2023-12-28",
+                complexity: 9.3,
+                effectiveness: 8.1
+            }
+        ];
+
+        // State management
+        let projects = [];
+        let sortConfig = { key: 'eloScore', direction: 'descending' };
+        let filterCategory = 'All';
+
+        // DOM elements
+        const projectsTable = document.getElementById('projectsTable');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const addProjectForm = document.getElementById('addProjectForm');
+        const complexityInput = document.getElementById('projectComplexity');
+        const complexityDisplay = document.getElementById('complexityDisplay');
+        const complexityValue = document.getElementById('complexityValue');
+        const effectivenessInput = document.getElementById('projectEffectiveness');
+        const effectivenessDisplay = document.getElementById('effectivenessDisplay');
+        const effectivenessValue = document.getElementById('effectivenessValue');
+        const estimatedElo = document.getElementById('estimatedElo');
+        const sortHeaders = document.querySelectorAll('.sort-header');
+        const saveButton = document.getElementById('saveButton');
+
+        // Initialize the application
+        function init() {
+            // Load projects from localStorage or use mock data
+            const savedProjects = localStorage.getItem('codeEloProjects');
+            projects = savedProjects ? JSON.parse(savedProjects) : mockData;
+            
+            // Set up event listeners
+            categoryFilter.addEventListener('change', (e) => {
+                filterCategory = e.target.value;
+                renderProjects();
+            });
+            
+            addProjectForm.addEventListener('submit', handleAddProject);
+            
+            complexityInput.addEventListener('input', updateComplexity);
+            effectivenessInput.addEventListener('input', updateEffectiveness);
+            
+            sortHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const key = header.getAttribute('data-sort');
+                    requestSort(key);
+                });
+            });
+            
+            saveButton.addEventListener('click', handleSaveToExternalSource);
+            
+            // Initial render
+            updateEstimatedElo();
+            renderProjects();
+        }
+
+        // Calculate ELO score
+        function calculateEloScore(complexity, effectiveness) {
+            return Math.round(1500 + (complexity * 100) + (effectiveness * 100));
+        }
+
+        // Update complexity display
+        function updateComplexity() {
+            const value = complexityInput.value;
+            complexityDisplay.textContent = value;
+            complexityValue.textContent = value;
+            updateEstimatedElo();
+        }
+
+        // Update effectiveness display
+        function updateEffectiveness() {
+            const value = effectivenessInput.value;
+            effectivenessDisplay.textContent = value;
+            effectivenessValue.textContent = value;
+            updateEstimatedElo();
+        }
+
+        // Update estimated ELO score
+        function updateEstimatedElo() {
+            const complexity = parseFloat(complexityInput.value);
+            const effectiveness = parseFloat(effectivenessInput.value);
+            estimatedElo.textContent = calculateEloScore(complexity, effectiveness);
+        }
+
+        // Sort projects
+        function sortProjects() {
+            return [...projects].sort((a, b) => {
+                if (a[sortConfig.key] < b[sortConfig.key]) {
+                    return sortConfig.direction === 'ascending' ? -1 : 1;
+                }
+                if (a[sortConfig.key] > b[sortConfig.key]) {
+                    return sortConfig.direction === 'ascending' ? 1 : -1;
+                }
+                return 0;
+            }).filter(project => filterCategory === 'All' || project.category === filterCategory);
+        }
+
+        // Handle sorting
+        function requestSort(key) {
+            let direction = 'ascending';
+            if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+                direction = 'descending';
+            }
+            sortConfig = { key, direction };
+            
+            // Update sort indicators
+            sortHeaders.forEach(header => {
+                const headerKey = header.getAttribute('data-sort');
+                if (headerKey === key) {
+                    header.textContent = header.textContent.replace(/↑|↓/g, '') + (direction === 'ascending' ? ' ↑' : ' ↓');
+                } else {
+                    header.textContent = header.textContent.replace(/↑|↓/g, '') + ' ↑';
+                }
+            });
+            
+            renderProjects();
+        }
+
+        // Render projects to the table
+        function renderProjects() {
+            const sortedProjects = sortProjects();
+            
+            projectsTable.innerHTML = '';
+            
+            if (sortedProjects.length === 0) {
+                projectsTable.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center py-12 text-gray-400">
+                            No projects found. Add your first project below.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            sortedProjects.forEach((project, index) => {
+                const row = document.createElement('tr');
+                row.className = `border-b border-purple-500/10 hover:bg-white hover:bg-opacity-5 transition-colors ${
+                    index < 3 ? 'bg-yellow-500 bg-opacity-20' : ''
+                }`;
+                
+                let categoryClass = '';
+                if (project.category === 'Corporate') {
+                    categoryClass = 'bg-blue-500 bg-opacity-30 text-blue-200';
+                } else if (project.category === 'University') {
+                    categoryClass = 'bg-green-500 bg-opacity-30 text-green-200';
+                } else if (project.category === 'OS Project') {
+                    categoryClass = 'bg-purple-500 bg-opacity-30 text-purple-200';
+                } else {
+                    categoryClass = 'bg-orange-500 bg-opacity-30 text-orange-200';
+                }
+                
+                row.innerHTML = `
+                    <td class="py-4 px-4 font-medium">${project.name}</td>
+                    <td class="py-4 px-4">${project.team}</td>
+                    <td class="py-4 px-4">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold ${categoryClass}">
+                            ${project.category}
+                        </span>
+                    </td>
+                    <td class="py-4 px-4 text-right font-bold">${project.eloScore}</td>
+                    <td class="py-4 px-4 text-right">${project.complexity.toFixed(1)}</td>
+                    <td class="py-4 px-4 text-right">${project.effectiveness.toFixed(1)}</td>
+                    <td class="py-4 px-4 text-right">${project.dateAdded}</td>
+                `;
+                
+                projectsTable.appendChild(row);
+            });
+        }
+
+        // Handle adding new project
+        function handleAddProject(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('projectName').value;
+            const team = document.getElementById('projectTeam').value;
+            const category = document.getElementById('projectCategory').value;
+            const complexity = parseFloat(complexityInput.value);
+            const effectiveness = parseFloat(effectivenessInput.value);
+            
+            if (!name || !team) return;
+            
+            const eloScore = calculateEloScore(complexity, effectiveness);
+            const project = {
+                id: projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1,
+                name,
+                team,
+                category,
+                complexity,
+                effectiveness,
+                eloScore,
+                dateAdded: new Date().toISOString().split('T')[0]
+            };
+            
+            projects.push(project);
+            localStorage.setItem('codeEloProjects', JSON.stringify(projects));
+            
+            // Reset form
+            document.getElementById('projectName').value = '';
+            document.getElementById('projectTeam').value = '';
+            complexityInput.value = 5.0;
+            effectivenessInput.value = 5.0;
+            complexityDisplay.textContent = '5.0';
+            effectivenessDisplay.textContent = '5.0';
+            complexityValue.textContent = '5.0';
+            effectivenessValue.textContent = '5.0';
+            updateEstimatedElo();
+            
+            renderProjects();
+        }
+
+        // Handle saving to external source
+        function handleSaveToExternalSource() {
+            alert("In a real implementation, this would save data to your Excel Online spreadsheet");
+        }
+
+        // Initialize the app when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
