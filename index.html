@@ -159,17 +159,11 @@
                                 <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="team">
                                     Team ↑
                                 </th>
-                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="category">
-                                    Category ↑
-                                </th>
                                 <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="eloScore">
                                     Elo Score ↑
                                 </th>
-                                <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="complexity">
-                                    Complexity ↑
-                                </th>
-                                <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="effectiveness">
-                                    Effectiveness ↑
+                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="category">
+                                    Category ↑
                                 </th>
                                 <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="dateAdded">
                                     Added ↑
@@ -210,37 +204,11 @@
                         <option value="Corporate">Corporate</option>
                         <option value="Individual">Individual</option>
                     </select>
-                    <div class="col-span-1 md:col-span-2 lg:col-span-1 flex items-center gap-4">
-                        <input
-                            type="range"
-                            id="projectComplexity"
-                            min="1"
-                            max="10"
-                            step="0.1"
-                            value="5.0"
-                            class="flex-1"
-                        />
-                        <span id="complexityValue" class="text-white w-20">5.0</span>
-                    </div>
-                    <span class="text-white col-span-1 md:col-span-2 lg:col-span-1">Complexity: <span id="complexityDisplay">5.0</span></span>
-                    <div class="col-span-1 md:col-span-2 lg:col-span-1 flex items-center gap-4">
-                        <input
-                            type="range"
-                            id="projectEffectiveness"
-                            min="1"
-                            max="10"
-                            step="0.1"
-                            value="5.0"
-                            class="flex-1"
-                        />
-                        <span id="effectivenessValue" class="text-white w-20">5.0</span>
-                    </div>
-                    <span class="text-white col-span-1 md:col-span-2 lg:col-span-1">Effectiveness: <span id="effectivenessDisplay">5.0</span></span>
                     <button
                         type="submit"
                         class="col-span-1 md:col-span-2 lg:col-span-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
                     >
-                        Add Project (Estimated Elo: <span id="estimatedElo">1500</span>)
+                        Add Project
                     </button>
                 </form>
             </div>
