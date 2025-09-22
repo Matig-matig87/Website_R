@@ -182,11 +182,10 @@
                     </table>
                 </div>
             </div>
-
             <!-- Add Project Form -->
             <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 border border-purple-500/20">
                 <h3 class="text-2xl font-bold text-white mb-4">Suggest a Project</h3>
-                <form id="addProjectForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <form id="addProjectForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                         type="text"
                         id="projectName"
@@ -210,40 +209,26 @@
                         <option value="Corporate">Corporate</option>
                         <option value="Individual">Individual</option>
                     </select>
-                    <div class="col-span-1 md:col-span-2 lg:col-span-1 flex items-center gap-4">
-                        <input
-                            type="range"
-                            id="projectComplexity"
-                            min="1"
-                            max="10"
-                            step="0.1"
-                            value="5.0"
-                            class="flex-1"
-                        />
-                        <span id="complexityValue" class="text-white w-20">5.0</span>
-                    </div>
-                    <span class="text-white col-span-1 md:col-span-2 lg:col-span-1">Complexity: <span id="complexityDisplay">5.0</span></span>
-                    <div class="col-span-1 md:col-span-2 lg:col-span-1 flex items-center gap-4">
-                        <input
-                            type="range"
-                            id="projectEffectiveness"
-                            min="1"
-                            max="10"
-                            step="0.1"
-                            value="5.0"
-                            class="flex-1"
-                        />
-                        <span id="effectivenessValue" class="text-white w-20">5.0</span>
-                    </div>
-                    <span class="text-white col-span-1 md:col-span-2 lg:col-span-1">Effectiveness: <span id="effectivenessDisplay">5.0</span></span>
+                    <input
+                        type="url"
+                        id="projectUrl"
+                        placeholder="Project URL (optional)"
+                        class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                    <textarea
+                        id="projectDescription"
+                        placeholder="Brief description (optional)"
+                        rows="3"
+                        class="col-span-1 md:col-span-2 bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    ></textarea>
                     <button
                         type="submit"
-                        class="col-span-1 md:col-span-2 lg:col-span-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        class="col-span-1 md:col-span-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
                     >
-                        Add Project (Estimated Elo: <span id="estimatedElo">1500</span>)
+                        Suggest Project
                     </button>
                 </form>
-            </div>
+            </div>            
 
             <!-- Methodology Notes -->
             <div class="mt-8 p-6 bg-gray-900 bg-opacity-50 rounded-lg border border-gray-700">
@@ -257,7 +242,7 @@
                 </div>
             </div>
         </section>
-
+        
         <!-- Business Value Section -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white text-center">
@@ -268,9 +253,52 @@
                     making it apples-to-apples. Privately compare and ranking across scored databases, 
                     and finding the areas to improve.
                 </p>
-                <button class="bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors">
+                <button 
+                    id="requestDemoBtn"
+                    class="bg-white text-purple-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors"
+                >
                     Request Enterprise Demo
                 </button>
+                
+                <!-- Demo Request Form (initially hidden) -->
+                <div id="demoForm" class="hidden mt-6 text-left bg-white bg-opacity-20 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">Request Enterprise Demo</h3>
+                    <form id="enterpriseDemoForm" class="space-y-4">
+                        <input
+                            type="text"
+                            id="companyName"
+                            placeholder="Company Name"
+                            class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            required
+                        />
+                        <input
+                            type="email"
+                            id="contactEmail"
+                            placeholder="Contact Email"
+                            class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            required
+                        />
+                        <input
+                            type="text"
+                            id="contactName"
+                            placeholder="Contact Name"
+                            class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            required
+                        />
+                        <textarea
+                            id="demoNeeds"
+                            placeholder="Tell us about your needs"
+                            rows="3"
+                            class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        ></textarea>
+                        <button
+                            type="submit"
+                            class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >
+                            Submit Request
+                        </button>
+                    </form>
+                </div>
             </div>
         </section>
 
@@ -338,7 +366,74 @@
                 </div>
             </div>
         </section>
-
+        <!-- Support Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="bg-gradient-to-r from-green-600 to-teal-600 rounded-xl p-8 text-white text-center">
+                <h2 class="text-3xl font-bold mb-4">Love the project?</h2>
+                <p class="text-xl mb-6">Pledge your support to help us continue development</p>
+                
+                <div id="supportForm" class="hidden mt-6 text-left bg-white bg-opacity-20 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">Support Our Project</h3>
+                    <form id="donationForm" class="space-y-4">
+                        <input
+                            type="text"
+                            id="supporterName"
+                            placeholder="Your Name"
+                            class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        />
+                        <input
+                            type="email"
+                            id="supporterEmail"
+                            placeholder="Your Email"
+                            class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        />
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm mb-2">Support Type</label>
+                                <select
+                                    id="supportType"
+                                    class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                >
+                                    <option value="one-time">One-time Donation</option>
+                                    <option value="monthly">Monthly Support</option>
+                                    <option value="feedback">Just Feedback</option>
+                                </select>
+                            </div>
+                            <div id="amountField">
+                                <label class="block text-sm mb-2">Amount ($)</label>
+                                <input
+                                    type="number"
+                                    id="donationAmount"
+                                    min="1"
+                                    value="25"
+                                    class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                />
+                            </div>
+                        </div>
+                        <textarea
+                            id="supportMessage"
+                            placeholder="Optional message of support"
+                            rows="2"
+                            class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        ></textarea>
+                        <button
+                            type="submit"
+                            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >
+                            Pledge Support
+                        </button>
+                    </form>
+                </div>
+                
+                <button 
+                    id="showSupportBtn"
+                    class="mt-6 bg-white text-green-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                    Pledge Your Support
+                </button>
+            </div>
+        </section>
+        
         <!-- Footer -->
         <footer class="bg-black bg-opacity-30 backdrop-blur-sm border-t border-purple-500/20 mt-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -674,7 +769,6 @@
             
             renderProjects();
         }
-
         // Initialize the app when the DOM is loaded
         document.addEventListener('DOMContentLoaded', init);
     </script>
