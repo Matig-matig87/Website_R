@@ -107,6 +107,11 @@
             font-size: 0.875rem;
             line-height: 1.25rem;
         }
+        
+        /* Hidden class for toggling forms */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body class="min-h-screen text-white">
@@ -159,20 +164,17 @@
                                 <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="team">
                                     Team ↑
                                 </th>
-                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="category">
-                                    Category ↑
-                                </th>
                                 <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="eloScore">
                                     Elo Score ↑
                                 </th>
-                                <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="complexity">
-                                    Complexity ↑
-                                </th>
-                                <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="effectiveness">
-                                    Effectiveness ↑
+                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="category">
+                                    Category ↑
                                 </th>
                                 <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="dateAdded">
                                     Added ↑
+                                </th>
+                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="samplingClass">
+                                    Sampling Class ↑
                                 </th>
                             </tr>
                         </thead>
@@ -182,6 +184,7 @@
                     </table>
                 </div>
             </div>
+
             <!-- Add Project Form -->
             <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 border border-purple-500/20">
                 <h3 class="text-2xl font-bold text-white mb-4">Suggest a Project</h3>
@@ -228,7 +231,7 @@
                         Suggest Project
                     </button>
                 </form>
-            </div>            
+            </div>
 
             <!-- Methodology Notes -->
             <div class="mt-8 p-6 bg-gray-900 bg-opacity-50 rounded-lg border border-gray-700">
@@ -242,7 +245,7 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Business Value Section -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white text-center">
@@ -338,439 +341,4 @@
                     </p>
                     <ul class="space-y-3 text-lg">
                         <li class="flex items-start">
-                            <span class="text-purple-400 mr-2">•</span>
-                            <span>90% of code is copied (which creates vulnerabilities)</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-purple-400 mr-2">•</span>
-                            <span>75% of enterprise codebases contain deprecated libraries</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-purple-400 mr-2">•</span>
-                            <span>60% of development time is spent on maintenance rather than innovation</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-purple-400 mr-2">•</span>
-                            <span>Only 15% of code changes actually improve system performance</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="md:w-1/2 order-1 md:order-2">
-                    <div class="bg-gradient-to-br from-red-500 to-orange-600 p-8 rounded-xl shadow-2xl text-center">
-                        <svg class="w-32 h-32 mx-auto mb-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M14.4 11.1L12 13.5l-2.4-2.4 1.4-1.4 1 1 1-1zM4 18h16v-6H4v6zm16-8h-5.6l2.4-2.4-1.4-1.4L12 9.6 8.6 6.2 7.2 7.6 9.6 10H4V4h16v6z"/>
-                        </svg>
-                        <h3 class="text-2xl font-bold text-white">Electrician Illustration</h3>
-                        <p class="text-white mt-2">Electrician figuring out lots of wires</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Support Section -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="bg-gradient-to-r from-green-600 to-teal-600 rounded-xl p-8 text-white text-center">
-                <h2 class="text-3xl font-bold mb-4">Love the project?</h2>
-                <p class="text-xl mb-6">Pledge your support to help us continue development</p>
-                
-                <div id="supportForm" class="hidden mt-6 text-left bg-white bg-opacity-20 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-4">Support Our Project</h3>
-                    <form id="donationForm" class="space-y-4">
-                        <input
-                            type="text"
-                            id="supporterName"
-                            placeholder="Your Name"
-                            class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        />
-                        <input
-                            type="email"
-                            id="supporterEmail"
-                            placeholder="Your Email"
-                            class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        />
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm mb-2">Support Type</label>
-                                <select
-                                    id="supportType"
-                                    class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                                >
-                                    <option value="one-time">One-time Donation</option>
-                                    <option value="monthly">Monthly Support</option>
-                                    <option value="feedback">Just Feedback</option>
-                                </select>
-                            </div>
-                            <div id="amountField">
-                                <label class="block text-sm mb-2">Amount ($)</label>
-                                <input
-                                    type="number"
-                                    id="donationAmount"
-                                    min="1"
-                                    value="25"
-                                    class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                                />
-                            </div>
-                        </div>
-                        <textarea
-                            id="supportMessage"
-                            placeholder="Optional message of support"
-                            rows="2"
-                            class="w-full bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        ></textarea>
-                        <button
-                            type="submit"
-                            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
-                        >
-                            Pledge Support
-                        </button>
-                    </form>
-                </div>
-                
-                <button 
-                    id="showSupportBtn"
-                    class="mt-6 bg-white text-green-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors"
-                >
-                    Pledge Your Support
-                </button>
-            </div>
-        </section>
-        
-        <!-- Footer -->
-        <footer class="bg-black bg-opacity-30 backdrop-blur-sm border-t border-purple-500/20 mt-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="text-center text-gray-400">
-                    <p>© 2024 Code Elo Ranking. All rights reserved.</p>
-                    <p class="mt-2">Powered by Reinforcement Learning AI Models</p>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <script>
-        // Generate sample projects
-        function generateSampleProjects() {
-            const sampleProjects = [
-                {
-                    id: 1,
-                    name: "React",
-                    team: "Meta",
-                    category: "Corporate",
-                    eloScore: 2850,
-                    dateAdded: "2024-01-15",
-                    complexity: 8.7,
-                    effectiveness: 9.2
-                },
-                {
-                    id: 2,
-                    name: "TensorFlow",
-                    team: "Google Brain",
-                    category: "Corporate",
-                    eloScore: 2780,
-                    dateAdded: "2024-01-12",
-                    complexity: 9.1,
-                    effectiveness: 8.5
-                },
-                {
-                    id: 3,
-                    name: "Linux Kernel",
-                    team: "Linux Foundation",
-                    category: "OS Project",
-                    eloScore: 2720,
-                    dateAdded: "2024-01-10",
-                    complexity: 9.5,
-                    effectiveness: 7.8
-                },
-                {
-                    id: 4,
-                    name: "MIT CSAIL Research",
-                    team: "MIT",
-                    category: "University",
-                    eloScore: 2680,
-                    dateAdded: "2024-01-08",
-                    complexity: 8.2,
-                    effectiveness: 8.9
-                },
-                {
-                    id: 5,
-                    name: "Vue.js",
-                    team: "Evan You",
-                    category: "Individual",
-                    eloScore: 2650,
-                    dateAdded: "2024-01-05",
-                    complexity: 7.8,
-                    effectiveness: 9.1
-                },
-                {
-                    id: 6,
-                    name: "D3.js",
-                    team: "Mike Bostock",
-                    category: "Individual",
-                    eloScore: 2620,
-                    dateAdded: "2024-01-03",
-                    complexity: 8.9,
-                    effectiveness: 8.3
-                },
-                {
-                    id: 7,
-                    name: "Stanford AI Lab",
-                    team: "Stanford University",
-                    category: "University",
-                    eloScore: 2590,
-                    dateAdded: "2024-01-01",
-                    complexity: 8.5,
-                    effectiveness: 8.7
-                },
-                {
-                    id: 8,
-                    name: "Rust",
-                    team: "Mozilla",
-                    category: "Corporate",
-                    eloScore: 2560,
-                    dateAdded: "2023-12-28",
-                    complexity: 9.3,
-                    effectiveness: 8.1
-                }
-            ];
-
-            // Generate additional 92 projects with random data
-            for (let i = 9; i <= 100; i++) {
-                const categories = ["OS Project", "University", "Corporate", "Individual"];
-                const category = categories[Math.floor(Math.random() * categories.length)];
-                const complexity = parseFloat((Math.random() * 5 + 5).toFixed(1));
-                const effectiveness = parseFloat((Math.random() * 5 + 5).toFixed(1));
-                const eloScore = Math.round(1500 + (complexity * 100) + (effectiveness * 100));
-                
-                // Generate random project names
-                const projectNames = [
-                    "Project Alpha", "CodeBase X", "Framework Y", "Library Z", 
-                    "Tool A", "System B", "Platform C", "Module D", "Component E",
-                    "App F", "Service G", "API H", "Engine I", "Algorithm J"
-                ];
-                
-                // Generate random teams
-                const teams = [
-                    "Team 1", "Team 2", "Team 3", "Open Source Community", 
-                    "University Research", "Corporate Dev", "Independent Dev",
-                    "Startup Team", "Enterprise Team", "Research Lab"
-                ];
-                
-                sampleProjects.push({
-                    id: i,
-                    name: `${projectNames[Math.floor(Math.random() * projectNames.length)]} ${i}`,
-                    team: teams[Math.floor(Math.random() * teams.length)],
-                    category: category,
-                    eloScore: eloScore,
-                    dateAdded: `${2023 + Math.floor(Math.random() * 2)}-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
-                    complexity: complexity,
-                    effectiveness: effectiveness
-                });
-            }
-            
-            return sampleProjects;
-        }
-
-        // State management
-        let projects = [];
-        let sortConfig = { key: 'eloScore', direction: 'descending' };
-        let filterCategory = 'All';
-
-        // DOM elements
-        const projectsTable = document.getElementById('projectsTable');
-        const categoryFilter = document.getElementById('categoryFilter');
-        const addProjectForm = document.getElementById('addProjectForm');
-        const complexityInput = document.getElementById('projectComplexity');
-        const complexityDisplay = document.getElementById('complexityDisplay');
-        const complexityValue = document.getElementById('complexityValue');
-        const effectivenessInput = document.getElementById('projectEffectiveness');
-        const effectivenessDisplay = document.getElementById('effectivenessDisplay');
-        const effectivenessValue = document.getElementById('effectivenessValue');
-        const estimatedElo = document.getElementById('estimatedElo');
-        const sortHeaders = document.querySelectorAll('.sort-header');
-
-        // Initialize the application
-        function init() {
-            // Load projects from localStorage or generate sample data
-            const savedProjects = localStorage.getItem('codeEloProjects');
-            projects = savedProjects ? JSON.parse(savedProjects) : generateSampleProjects();
-            
-            // Set up event listeners
-            categoryFilter.addEventListener('change', (e) => {
-                filterCategory = e.target.value;
-                renderProjects();
-            });
-            
-            addProjectForm.addEventListener('submit', handleAddProject);
-            
-            complexityInput.addEventListener('input', updateComplexity);
-            effectivenessInput.addEventListener('input', updateEffectiveness);
-            
-            sortHeaders.forEach(header => {
-                header.addEventListener('click', () => {
-                    const key = header.getAttribute('data-sort');
-                    requestSort(key);
-                });
-            });
-            
-            // Initial render
-            updateEstimatedElo();
-            renderProjects();
-        }
-
-        // Calculate ELO score
-        function calculateEloScore(complexity, effectiveness) {
-            return Math.round(1500 + (complexity * 100) + (effectiveness * 100));
-        }
-
-        // Update complexity display
-        function updateComplexity() {
-            const value = complexityInput.value;
-            complexityDisplay.textContent = value;
-            complexityValue.textContent = value;
-            updateEstimatedElo();
-        }
-
-        // Update effectiveness display
-        function updateEffectiveness() {
-            const value = effectivenessInput.value;
-            effectivenessDisplay.textContent = value;
-            effectivenessValue.textContent = value;
-            updateEstimatedElo();
-        }
-
-        // Update estimated ELO score
-        function updateEstimatedElo() {
-            const complexity = parseFloat(complexityInput.value);
-            const effectiveness = parseFloat(effectivenessInput.value);
-            estimatedElo.textContent = calculateEloScore(complexity, effectiveness);
-        }
-
-        // Sort projects
-        function sortProjects() {
-            return [...projects].sort((a, b) => {
-                if (a[sortConfig.key] < b[sortConfig.key]) {
-                    return sortConfig.direction === 'ascending' ? -1 : 1;
-                }
-                if (a[sortConfig.key] > b[sortConfig.key]) {
-                    return sortConfig.direction === 'ascending' ? 1 : -1;
-                }
-                return 0;
-            }).filter(project => filterCategory === 'All' || project.category === filterCategory);
-        }
-
-        // Handle sorting
-        function requestSort(key) {
-            let direction = 'ascending';
-            if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-                direction = 'descending';
-            }
-            sortConfig = { key, direction };
-            
-            // Update sort indicators
-            sortHeaders.forEach(header => {
-                const headerKey = header.getAttribute('data-sort');
-                if (headerKey === key) {
-                    header.textContent = header.textContent.replace(/↑|↓/g, '') + (direction === 'ascending' ? ' ↑' : ' ↓');
-                } else {
-                    header.textContent = header.textContent.replace(/↑|↓/g, '') + ' ↑';
-                }
-            });
-            
-            renderProjects();
-        }
-
-        // Render projects to the table
-        function renderProjects() {
-            const sortedProjects = sortProjects();
-            
-            projectsTable.innerHTML = '';
-            
-            if (sortedProjects.length === 0) {
-                projectsTable.innerHTML = `
-                    <tr>
-                        <td colspan="7" class="text-center py-12 text-gray-400">
-                            No projects found. Add your first project below.
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            sortedProjects.forEach((project, index) => {
-                const row = document.createElement('tr');
-                row.className = `border-b border-purple-500/10 hover:bg-white hover:bg-opacity-5 transition-colors ${
-                    index < 3 ? 'bg-yellow-500 bg-opacity-20' : ''
-                }`;
-                
-                let categoryClass = '';
-                if (project.category === 'Corporate') {
-                    categoryClass = 'bg-blue-500 bg-opacity-30 text-blue-200';
-                } else if (project.category === 'University') {
-                    categoryClass = 'bg-green-500 bg-opacity-30 text-green-200';
-                } else if (project.category === 'OS Project') {
-                    categoryClass = 'bg-purple-500 bg-opacity-30 text-purple-200';
-                } else {
-                    categoryClass = 'bg-orange-500 bg-opacity-30 text-orange-200';
-                }
-                
-                row.innerHTML = `
-                    <td class="py-4 px-4 font-medium">${project.name}</td>
-                    <td class="py-4 px-4">${project.team}</td>
-                    <td class="py-4 px-4">
-                        <span class="px-2 py-1 rounded-full text-xs font-semibold ${categoryClass}">
-                            ${project.category}
-                        </span>
-                    </td>
-                    <td class="py-4 px-4 text-right font-bold">${project.eloScore}</td>
-                    <td class="py-4 px-4 text-right">${project.complexity.toFixed(1)}</td>
-                    <td class="py-4 px-4 text-right">${project.effectiveness.toFixed(1)}</td>
-                    <td class="py-4 px-4 text-right">${project.dateAdded}</td>
-                `;
-                
-                projectsTable.appendChild(row);
-            });
-        }
-
-        // Handle adding new project
-        function handleAddProject(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('projectName').value;
-            const team = document.getElementById('projectTeam').value;
-            const category = document.getElementById('projectCategory').value;
-            const complexity = parseFloat(complexityInput.value);
-            const effectiveness = parseFloat(effectivenessInput.value);
-            
-            if (!name || !team) return;
-            
-            const eloScore = calculateEloScore(complexity, effectiveness);
-            const project = {
-                id: projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1,
-                name,
-                team,
-                category,
-                complexity,
-                effectiveness,
-                eloScore,
-                dateAdded: new Date().toISOString().split('T')[0]
-            };
-            
-            projects.push(project);
-            localStorage.setItem('codeEloProjects', JSON.stringify(projects));
-            
-            // Reset form
-            document.getElementById('projectName').value = '';
-            document.getElementById('projectTeam').value = '';
-            complexityInput.value = 5.0;
-            effectivenessInput.value = 5.0;
-            complexityDisplay.textContent = '5.0';
-            effectivenessDisplay.textContent = '5.0';
-            complexityValue.textContent = '5.0';
-            effectivenessValue.textContent = '5.0';
-            updateEstimatedElo();
-            
-            renderProjects();
-        }
-        // Initialize the app when the DOM is loaded
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
-</body>
-</html>
+                            <span class="
