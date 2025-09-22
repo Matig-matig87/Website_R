@@ -32,16 +32,6 @@
             min-height: 100vh;
         }
         
-        .loading-spinner {
-            border-top-color: #a855f7;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
         .bg-opacity-10 {
             background-color: rgba(255, 255, 255, 0.1);
         }
@@ -159,20 +149,17 @@
                                 <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="team">
                                     Team ↑
                                 </th>
-                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="category">
-                                    Category ↑
-                                </th>
                                 <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="eloScore">
                                     Elo Score ↑
                                 </th>
-                                <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="complexity">
-                                    Complexity ↑
-                                </th>
-                                <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="effectiveness">
-                                    Effectiveness ↑
+                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="category">
+                                    Category ↑
                                 </th>
                                 <th class="text-right py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="dateAdded">
                                     Added ↑
+                                </th>
+                                <th class="text-left py-3 px-4 cursor-pointer hover:text-purple-300 transition-colors sort-header" data-sort="samplingClass">
+                                    Sampling Class ↑
                                 </th>
                             </tr>
                         </thead>
@@ -186,7 +173,7 @@
             <!-- Add Project Form -->
             <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 border border-purple-500/20">
                 <h3 class="text-2xl font-bold text-white mb-4">Suggest a Project</h3>
-                <form id="addProjectForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <form id="addProjectForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                         type="text"
                         id="projectName"
@@ -201,46 +188,11 @@
                         class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
                         required
                     />
-                    <select
-                        id="projectCategory"
-                        class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    >
-                        <option value="OS Project">OS Project</option>
-                        <option value="University">University</option>
-                        <option value="Corporate">Corporate</option>
-                        <option value="Individual">Individual</option>
-                    </select>
-                    <div class="col-span-1 md:col-span-2 lg:col-span-1 flex items-center gap-4">
-                        <input
-                            type="range"
-                            id="projectComplexity"
-                            min="1"
-                            max="10"
-                            step="0.1"
-                            value="5.0"
-                            class="flex-1"
-                        />
-                        <span id="complexityValue" class="text-white w-20">5.0</span>
-                    </div>
-                    <span class="text-white col-span-1 md:col-span-2 lg:col-span-1">Complexity: <span id="complexityDisplay">5.0</span></span>
-                    <div class="col-span-1 md:col-span-2 lg:col-span-1 flex items-center gap-4">
-                        <input
-                            type="range"
-                            id="projectEffectiveness"
-                            min="1"
-                            max="10"
-                            step="0.1"
-                            value="5.0"
-                            class="flex-1"
-                        />
-                        <span id="effectivenessValue" class="text-white w-20">5.0</span>
-                    </div>
-                    <span class="text-white col-span-1 md:col-span-2 lg:col-span-1">Effectiveness: <span id="effectivenessDisplay">5.0</span></span>
                     <button
                         type="submit"
-                        class="col-span-1 md:col-span-2 lg:col-span-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        class="col-span-1 md:col-span-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
                     >
-                        Add Project (Estimated Elo: <span id="estimatedElo">1500</span>)
+                        Send 
                     </button>
                 </form>
             </div>
@@ -361,8 +313,7 @@
                     category: "Corporate",
                     eloScore: 2850,
                     dateAdded: "2024-01-15",
-                    complexity: 8.7,
-                    effectiveness: 9.2
+                    samplingClass: "A"
                 },
                 {
                     id: 2,
@@ -371,8 +322,7 @@
                     category: "Corporate",
                     eloScore: 2780,
                     dateAdded: "2024-01-12",
-                    complexity: 9.1,
-                    effectiveness: 8.5
+                    samplingClass: "A"
                 },
                 {
                     id: 3,
@@ -381,8 +331,7 @@
                     category: "OS Project",
                     eloScore: 2720,
                     dateAdded: "2024-01-10",
-                    complexity: 9.5,
-                    effectiveness: 7.8
+                    samplingClass: "B"
                 },
                 {
                     id: 4,
@@ -391,8 +340,7 @@
                     category: "University",
                     eloScore: 2680,
                     dateAdded: "2024-01-08",
-                    complexity: 8.2,
-                    effectiveness: 8.9
+                    samplingClass: "B"
                 },
                 {
                     id: 5,
@@ -401,8 +349,7 @@
                     category: "Individual",
                     eloScore: 2650,
                     dateAdded: "2024-01-05",
-                    complexity: 7.8,
-                    effectiveness: 9.1
+                    samplingClass: "C"
                 },
                 {
                     id: 6,
@@ -411,8 +358,7 @@
                     category: "Individual",
                     eloScore: 2620,
                     dateAdded: "2024-01-03",
-                    complexity: 8.9,
-                    effectiveness: 8.3
+                    samplingClass: "C"
                 },
                 {
                     id: 7,
@@ -421,8 +367,7 @@
                     category: "University",
                     eloScore: 2590,
                     dateAdded: "2024-01-01",
-                    complexity: 8.5,
-                    effectiveness: 8.7
+                    samplingClass: "D"
                 },
                 {
                     id: 8,
@@ -431,18 +376,17 @@
                     category: "Corporate",
                     eloScore: 2560,
                     dateAdded: "2023-12-28",
-                    complexity: 9.3,
-                    effectiveness: 8.1
+                    samplingClass: "D"
                 }
             ];
 
             // Generate additional 92 projects with random data
             for (let i = 9; i <= 100; i++) {
                 const categories = ["OS Project", "University", "Corporate", "Individual"];
+                const samplingClasses = ["A", "B", "C", "D", "E"];
                 const category = categories[Math.floor(Math.random() * categories.length)];
-                const complexity = parseFloat((Math.random() * 5 + 5).toFixed(1));
-                const effectiveness = parseFloat((Math.random() * 5 + 5).toFixed(1));
-                const eloScore = Math.round(1500 + (complexity * 100) + (effectiveness * 100));
+                const samplingClass = samplingClasses[Math.floor(Math.random() * samplingClasses.length)];
+                const eloScore = Math.round(1500 + (Math.random() * 1500));
                 
                 // Generate random project names
                 const projectNames = [
@@ -465,8 +409,7 @@
                     category: category,
                     eloScore: eloScore,
                     dateAdded: `${2023 + Math.floor(Math.random() * 2)}-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
-                    complexity: complexity,
-                    effectiveness: effectiveness
+                    samplingClass: samplingClass
                 });
             }
             
@@ -482,13 +425,6 @@
         const projectsTable = document.getElementById('projectsTable');
         const categoryFilter = document.getElementById('categoryFilter');
         const addProjectForm = document.getElementById('addProjectForm');
-        const complexityInput = document.getElementById('projectComplexity');
-        const complexityDisplay = document.getElementById('complexityDisplay');
-        const complexityValue = document.getElementById('complexityValue');
-        const effectivenessInput = document.getElementById('projectEffectiveness');
-        const effectivenessDisplay = document.getElementById('effectivenessDisplay');
-        const effectivenessValue = document.getElementById('effectivenessValue');
-        const estimatedElo = document.getElementById('estimatedElo');
         const sortHeaders = document.querySelectorAll('.sort-header');
 
         // Initialize the application
@@ -505,9 +441,6 @@
             
             addProjectForm.addEventListener('submit', handleAddProject);
             
-            complexityInput.addEventListener('input', updateComplexity);
-            effectivenessInput.addEventListener('input', updateEffectiveness);
-            
             sortHeaders.forEach(header => {
                 header.addEventListener('click', () => {
                     const key = header.getAttribute('data-sort');
@@ -516,36 +449,7 @@
             });
             
             // Initial render
-            updateEstimatedElo();
             renderProjects();
-        }
-
-        // Calculate ELO score
-        function calculateEloScore(complexity, effectiveness) {
-            return Math.round(1500 + (complexity * 100) + (effectiveness * 100));
-        }
-
-        // Update complexity display
-        function updateComplexity() {
-            const value = complexityInput.value;
-            complexityDisplay.textContent = value;
-            complexityValue.textContent = value;
-            updateEstimatedElo();
-        }
-
-        // Update effectiveness display
-        function updateEffectiveness() {
-            const value = effectivenessInput.value;
-            effectivenessDisplay.textContent = value;
-            effectivenessValue.textContent = value;
-            updateEstimatedElo();
-        }
-
-        // Update estimated ELO score
-        function updateEstimatedElo() {
-            const complexity = parseFloat(complexityInput.value);
-            const effectiveness = parseFloat(effectivenessInput.value);
-            estimatedElo.textContent = calculateEloScore(complexity, effectiveness);
         }
 
         // Sort projects
@@ -591,7 +495,7 @@
             if (sortedProjects.length === 0) {
                 projectsTable.innerHTML = `
                     <tr>
-                        <td colspan="7" class="text-center py-12 text-gray-400">
+                        <td colspan="6" class="text-center py-12 text-gray-400">
                             No projects found. Add your first project below.
                         </td>
                     </tr>
@@ -616,18 +520,34 @@
                     categoryClass = 'bg-orange-500 bg-opacity-30 text-orange-200';
                 }
                 
+                let samplingClassColor = '';
+                if (project.samplingClass === 'A') {
+                    samplingClassColor = 'bg-green-500 bg-opacity-20 text-gray-200';
+                } else if (project.samplingClass === 'B') {
+                    samplingClassColor = 'bg-teal-500 bg-opacity-20 text-gray-200';
+                } else if (project.samplingClass === 'C') {
+                    samplingClassColor = 'bg-yellow-500 bg-opacity-20 text-gray-200';
+                } else if (project.samplingClass === 'D') {
+                    samplingClassColor = 'bg-orange-500 bg-opacity-20 text-gray-200';
+                } else {
+                    samplingClassColor = 'bg-red-500 bg-opacity-20 text-gray-200';
+                }
+                
                 row.innerHTML = `
                     <td class="py-4 px-4 font-medium">${project.name}</td>
                     <td class="py-4 px-4">${project.team}</td>
+                    <td class="py-4 px-4 text-right font-bold">${project.eloScore}</td>
                     <td class="py-4 px-4">
                         <span class="px-2 py-1 rounded-full text-xs font-semibold ${categoryClass}">
                             ${project.category}
                         </span>
                     </td>
-                    <td class="py-4 px-4 text-right font-bold">${project.eloScore}</td>
-                    <td class="py-4 px-4 text-right">${project.complexity.toFixed(1)}</td>
-                    <td class="py-4 px-4 text-right">${project.effectiveness.toFixed(1)}</td>
                     <td class="py-4 px-4 text-right">${project.dateAdded}</td>
+                    <td class="py-4 px-4">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold ${samplingClassColor}">
+                            ${project.samplingClass}
+                        </span>
+                    </td>
                 `;
                 
                 projectsTable.appendChild(row);
@@ -640,39 +560,38 @@
             
             const name = document.getElementById('projectName').value;
             const team = document.getElementById('projectTeam').value;
-            const category = document.getElementById('projectCategory').value;
-            const complexity = parseFloat(complexityInput.value);
-            const effectiveness = parseFloat(effectivenessInput.value);
             
             if (!name || !team) return;
             
-            const eloScore = calculateEloScore(complexity, effectiveness);
+            // Generate random category and sampling class for new projects
+            const categories = ["OS Project", "University", "Corporate", "Individual"];
+            const samplingClasses = ["A", "B", "C", "D", "E"];
+            const category = categories[Math.floor(Math.random() * categories.length)];
+            const samplingClass = samplingClasses[Math.floor(Math.random() * samplingClasses.length)];
+            
+            // Calculate a random Elo score between 2000-3000 for new projects
+            const eloScore = Math.floor(Math.random() * 1000) + 2000;
+            
             const project = {
                 id: projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1,
                 name,
                 team,
                 category,
-                complexity,
-                effectiveness,
                 eloScore,
-                dateAdded: new Date().toISOString().split('T')[0]
+                dateAdded: new Date().toISOString().split('T')[0],
+                samplingClass
             };
             
             projects.push(project);
             localStorage.setItem('codeEloProjects', JSON.stringify(projects));
             
             // Reset form
-            document.getElementById('projectName').value = '';
-            document.getElementById('projectTeam').value = '';
-            complexityInput.value = 5.0;
-            effectivenessInput.value = 5.0;
-            complexityDisplay.textContent = '5.0';
-            effectivenessDisplay.textContent = '5.0';
-            complexityValue.textContent = '5.0';
-            effectivenessValue.textContent = '5.0';
-            updateEstimatedElo();
+            document.getElementById('addProjectForm').reset();
             
+            // Re-render projects
             renderProjects();
+            
+            alert('Thank you for your project suggestion! We will review it soon.');
         }
 
         // Initialize the app when the DOM is loaded
