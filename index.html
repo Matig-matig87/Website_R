@@ -197,6 +197,31 @@
                 </form>
             </div>
 
+            <!-- Updated Project Suggestion Form -->
+            <form id="addProjectForm" action="https://formspree.io/f/xkgbnegb" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" name="projectName" placeholder="Project Name" required />
+                <input type="text" name="team" placeholder="Team/Organization" required />
+                <input type="hidden" name="_subject" value="New Project Suggestion">
+                <input type="hidden" name="_replyto" value="noreply@yourapp.com">
+                <button type="submit">Suggest Project</button>
+            </form>
+            
+            <!-- Updated Demo Request Form -->
+            <form id="enterpriseDemoForm" action="https://formspree.io/f/xkgbnegb" method="POST" class="space-y-4">
+                <input type="text" name="company" placeholder="Company Name" required />
+                <input type="email" name="email" placeholder="Contact Email" required />
+                <input type="hidden" name="_subject" value="Enterprise Demo Request">
+                <button type="submit">Submit Request</button>
+            </form>
+            
+            <!-- Updated Support Form -->
+            <form id="donationForm" action="https://formspree.io/f/xkgbnegb" method="POST" class="space-y-4">
+                <input type="text" name="name" placeholder="Your Name" />
+                <input type="email" name="email" placeholder="Your Email" />
+                <input type="hidden" name="_subject" value="Support Pledge">
+                <button type="submit">Pledge Support</button>
+            </form>
+            
             <!-- Methodology Notes -->
             <div class="mt-8 p-6 bg-gray-900 bg-opacity-50 rounded-lg border border-gray-700">
                 <h4 class="text-lg font-semibold text-gray-200 mb-3">Methodology Notes</h4>
